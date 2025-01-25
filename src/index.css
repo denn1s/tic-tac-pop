@@ -1,3 +1,13 @@
+* {
+  font-family: 'Sour Gummy', cursive;
+  box-sizing: border-box;
+}
+
+html, body {
+  padding: 0;
+  margin: 0;
+}
+
 @keyframes blink {
   0% {
     opacity: 1;
@@ -46,6 +56,14 @@
   background-image: url('/pop-red.png');
   background-size: contain;
   background-repeat: no-repeat;
+}
+
+.pop.red::after {
+  background-image: url('/pop-red.png');
+}
+
+.pop.blue::after {
+  background-image: url('/pop-green.png');
 }
 
 @keyframes float {
@@ -99,4 +117,20 @@
 .main-grid {
   background-image: url('/board.webp');
   background-size: cover;
+  background-position: center -17px;
+}
+
+.shadows::before {
+  content: '';
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background-image: url('/shadows.png');
+  background-position: bottom;
+  background-size: cover;
+  opacity: 0.2;
+  pointer-events: none;
 }

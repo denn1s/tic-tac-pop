@@ -46,7 +46,7 @@ const Lobby = ({ join }) => {
 
   if (waiting.matchID) {
     return (
-      <div className="p-4 w-screen h-screen board flex flex-col items-center justify-center">
+      <div className="p-4 w-screen h-screen board flex flex-col items-center justify-center shadows">
         <img src="/title.webp" className="w-100" />
         <h1 className="text-2xl -mt-8 mb-12 font-bold">Waiting Room</h1>
         <div className="mb-4 w-80 text-sky-900">
@@ -68,9 +68,9 @@ const Lobby = ({ join }) => {
   }
 
   return (
-    <div className="p-4 w-screen h-screen board flex flex-col items-center justify-center">
+    <div className="w-screen h-screen board flex flex-col items-center justify-center shadows">
       <img src="/title.webp" className="w-100" />
-      <h1 className="text-2xl -mt-8 mb-12 font-bold">Lobby</h1>
+      <h1 className="text-2xl -mt-8 mb-12 font-bold text-sky-800">Lobby</h1>
       <div className="mb-4 flex h-12 w-80">
         <input
           type="text"

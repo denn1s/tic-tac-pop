@@ -5,14 +5,15 @@ const Board = ({ G, ctx, moves, isActive }) => {
   return (
     <div className={`w-screen h-screen flex flex-col items-center justify-center board`}>
 <img src="/title.webp" className="w-100" />
-      <div className="grid grid-cols-3 gap-4 main-grid">
+      <div className="grid grid-cols-3 gap-1 main-grid">
         {G.cells.map((cell, index) => (
           <button
             key={index}
             className={`
 w-24 h-24 
 ${cell.turn === willPopNext ? 'blink' : ''}
-${cell.index === G.pop ? 'pop' : ''}
+${cell.index === G.pop && ctx.currentPlayer === "0" ? 'pop red' : ''}
+${cell.index === G.pop && ctx.currentPlayer === "1" ? 'pop blue' : ''}
 ${cell.value === "0" ? "bubble x" : ""}
 ${cell.value === "1" ? "bubble o" : ""}
 `}
