@@ -9,8 +9,6 @@ const Lobby = ({ join }) => {
   )
   const [waiting, setwaiting] = useState({})
   const shareURL = `${window.location.href}?game=${waiting.matchID}`
-  navigator.clipboard.writeText(shareURL)
-
 
   const createGame = async () => {
     const playerID = "0"
@@ -60,7 +58,7 @@ const Lobby = ({ join }) => {
           <h3 className="font-bold">Room</h3>
           <ul className="list-decimal list-inside">
             <li>Code: {waiting.matchID}</li>
-            <li onClick={() => navigator.clipboard.writeText(shareURL)} title="Click to copy">Share: <a href={`${window.location.href}?game=${waiting.matchID}`} onClick={e => e.preventDefault()}>copy</a></li>
+            <li onClick={() => navigator?.clipboard?.writeText(shareURL)} title="Click to copy">Share: <a href={`${window.location.href}?game=${waiting.matchID}`} onClick={e => e.preventDefault()}>copy</a></li>
           </ul>
         </div>
       </div>
