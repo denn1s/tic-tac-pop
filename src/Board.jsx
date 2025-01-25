@@ -26,7 +26,7 @@ ${cell.value === "1" ? "bubble o" : ""}
         </div> 
       ) : (
      <div className="mt-4 text-center text-4xl font-bold text-sky-800">
-         {ctx.currentPlayer === "0" ? "X" : "O"}'s turn 
+       {isActive ? 'Your turn' : 'Waiting...'} 
         </div> 
       )}
     </div>
