@@ -8,25 +8,37 @@ const Lobby = ({ join }) => {
     new URLSearchParams(window.location.search).get('game') || ''
   )
   const [waiting, setwaiting] = useState({})
+  const [loading, setloading] = useState(false)
   const shareURL = `${window.location.href}?game=${waiting.matchID}`
 
   const createGame = async () => {
-    const playerID = "0"
-    const playerName = "Red"
-    const { matchID } = await lobbyClient.createMatch('tic-tac-pop', { numPlayers: 2 })
-    const { playerCredentials } = await lobbyClient.joinMatch('tic-tac-pop', matchID, { playerID, playerName }) 
+    setloading(true)
+    try {
+      const playerID = "0"
+      const playerName = "Red"
+      const { matchID } = await lobbyClient.createMatch('tic-tac-pop', { numPlayers: 2 })
+      const { playerCredentials } = await lobbyClient.joinMatch('tic-tac-pop', matchID, { playerID, playerName }) 
 
-    setwaiting({ matchID, playerCredentials, playerID, playerName })
+      setwaiting({ matchID, playerCredentials, playerID, playerName })
+    } catch (error) {
+      console.error('Error creating game:', error)
+      setloading(false)
+    }
   }
 
   const joinGame = async () => {
-    const playerID = "1"
-    const playerName = "Blue"
-    const { playerCredentials } = await lobbyClient.joinMatch('tic-tac-pop', game, { playerID, playerName }) 
-    join(game, playerID, playerCredentials)
+    setloading(true)
+    try {
+      const playerID = "1"
+      const playerName = "Blue"
+      const { playerCredentials } = await lobbyClient.joinMatch('tic-tac-pop', game, { playerID, playerName }) 
+      join(game, playerID, playerCredentials)
+    } catch (error) {
+      console.error('Error joining game:', error)
+      setloading(false)
+    }
   }
 
-  // poll other player
   useEffect(() => {
     let interval
     if (waiting.matchID) {
@@ -76,13 +88,21 @@ const Lobby = ({ join }) => {
           onChange={({ target: { value }}) => setgame(value)}
           className="border border-sky-800 bg-white px-4 py-2 flex-grow"
         />
-        <button className="bg-sky-600 border border-sky-800 text-white px-1 py-2 mb-4 h-full" onClick={joinGame}>
+        <button
+          className="bg-sky-600 border border-sky-800 text-white px-1 py-2 mb-4 h-full"
+          onClick={joinGame}
+          disabled={loading}
+        >
           Join Game
         </button>
       </div>
 
       <div className="mb-4 flex h-12 w-80">
-        <button className="w-full h-full bg-violet-400 border border-violet-800 text-white px-4 py-2 mb-4" onClick={createGame}>
+        <button
+          className="w-full h-full bg-violet-400 border border-violet-800 text-white px-4 py-2 mb-4"
+          onClick={createGame}
+          disabled={loading}
+        >
           Create Game
         </button>
       </div>
@@ -91,3 +111,4 @@ const Lobby = ({ join }) => {
 }
 
 export default Lobby
+
