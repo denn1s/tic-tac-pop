@@ -134,7 +134,7 @@ html, body {
 .shadows::before {
   content: '';
   width: 100%;
-  height: 100dvh; 
+  height: 100%; 
   position: absolute;
   bottom: 0;
   left: 0;
