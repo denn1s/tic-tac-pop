@@ -12,21 +12,23 @@ const Lobby = ({ join }) => {
   const shareURL = `${window.location.href}?game=${waiting.matchID}`
 
   const createGame = async () => {
+    if (loading) return
     setloading(true)
     try {
       const playerID = "0"
       const playerName = "Red"
       const { matchID } = await lobbyClient.createMatch('tic-tac-pop', { numPlayers: 2 })
       const { playerCredentials } = await lobbyClient.joinMatch('tic-tac-pop', matchID, { playerID, playerName }) 
-
       setwaiting({ matchID, playerCredentials, playerID, playerName })
     } catch (error) {
       console.error('Error creating game:', error)
+    } finally {
       setloading(false)
     }
   }
 
   const joinGame = async () => {
+    if (loading) return
     setloading(true)
     try {
       const playerID = "1"
@@ -35,6 +37,7 @@ const Lobby = ({ join }) => {
       join(game, playerID, playerCredentials)
     } catch (error) {
       console.error('Error joining game:', error)
+    } finally {
       setloading(false)
     }
   }
@@ -56,7 +59,7 @@ const Lobby = ({ join }) => {
 
   if (waiting.matchID) {
     return (
-      <div className="p-4 w-screen h-screen board flex flex-col items-center justify-center shadows">
+      <div className="p-4 w-screen h-screen board flex flex-col items-center pt-30 shadows">
         <img src="/title.webp" className="w-100" />
         <h1 className="text-2xl -mt-8 mb-12 font-bold">Waiting Room</h1>
         <div className="mb-4 w-80 text-sky-900">
@@ -78,7 +81,7 @@ const Lobby = ({ join }) => {
   }
 
   return (
-    <div className="w-screen h-screen board flex flex-col items-center justify-center shadows">
+    <div className="w-screen h-screen board flex flex-col items-center shadows pt-30">
       <img src="/title.webp" className="w-100" />
       <h1 className="text-2xl -mt-8 mb-12 font-bold text-sky-800">Lobby</h1>
       <div className="mb-4 flex h-12 w-80">
@@ -91,7 +94,6 @@ const Lobby = ({ join }) => {
         <button
           className="bg-sky-600 border border-sky-800 text-white px-1 py-2 mb-4 h-full"
           onClick={joinGame}
-          disabled={loading}
         >
           Join Game
         </button>
@@ -101,7 +103,6 @@ const Lobby = ({ join }) => {
         <button
           className="w-full h-full bg-violet-400 border border-violet-800 text-white px-4 py-2 mb-4"
           onClick={createGame}
-          disabled={loading}
         >
           Create Game
         </button>
